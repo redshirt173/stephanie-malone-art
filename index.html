@@ -285,24 +285,176 @@ const CONFIG = {
    2) WORKS  — one { } block per painting.  status: "available" or "sold".
    =========================================================================== */
 const WORKS = [
-  { title:"Untitled (Morning)", year:2025, medium:"Oil on canvas", size:'30 × 40 in',
-    status:"available", image:"", ratio:0.78,
-    desc:"Add an optional sentence or two about this piece — the idea behind it, the palette, where it was made." },
+  { title:"Woman in Bloom", year:2026, medium:"", size:"", status:"available",
+    image:"images/Photo Jun 13 2026, 1 27 27 PM.jpg", desc:"" },
 
-  { title:"Field Study No. 3", year:2025, medium:"Acrylic on panel", size:'18 × 24 in',
-    status:"available", image:"", ratio:0.75, desc:"" },
+  { title:"Rainbow Ascension", year:2026, medium:"", size:"", status:"available",
+    image:"images/Photo Jun 13 2026, 1 08 04 PM.jpg", desc:"" },
 
-  { title:"Low Tide", year:2024, medium:"Oil on linen", size:'24 × 24 in',
-    status:"sold", image:"", ratio:1, desc:"" },
+  { title:"Never Truly Alone", year:2026, medium:"", size:"", status:"available",
+    image:"images/Photo Jun 13 2026, 8 00 42 AM.jpg", desc:"" },
 
-  { title:"Quiet Room", year:2024, medium:"Watercolor on paper", size:'14 × 11 in',
-    status:"available", image:"", ratio:1.28, desc:"" },
+  { title:"Violet Wolves", year:2026, medium:"", size:"", status:"available",
+    image:"images/Photo Jun 12 2026, 3 18 16 AM.jpg", desc:"" },
 
-  { title:"Two Trees", year:2023, medium:"Oil on canvas", size:'36 × 48 in',
-    status:"available", image:"", ratio:0.75, desc:"" },
+  { title:"Crimson Burst", year:2026, medium:"", size:"", status:"available",
+    image:"images/Photo Jun 11 2026, 5 43 37 PM.jpg", desc:"" },
 
-  { title:"After the Rain", year:2023, medium:"Acrylic on canvas", size:'20 × 16 in',
-    status:"sold", image:"", ratio:1.25, desc:"" }
+  { title:"Prism Cat", year:2026, medium:"", size:"", status:"available",
+    image:"images/Photo Jun 11 2026, 9 07 17 AM.jpg", desc:"" },
+
+  { title:"Bird Mandala", year:2026, medium:"", size:"", status:"available",
+    image:"images/Photo Jun 10 2026, 4 51 11 PM.jpg", desc:"" },
+
+  { title:"Desert Lynx", year:2026, medium:"", size:"", status:"available",
+    image:"images/Photo Jun 10 2026, 6 27 38 AM.jpg", desc:"" },
+
+  { title:"Field of Embers", year:2026, medium:"", size:"", status:"available",
+    image:"images/Photo Jun 09 2026, 10 07 12 AM.jpg", desc:"" },
+
+  { title:"Violet Veil", year:2026, medium:"", size:"", status:"available",
+    image:"images/Photo Jun 09 2026, 6 59 00 AM.jpg", desc:"" },
+
+  { title:"Mirror Bloom", year:2026, medium:"", size:"", status:"available",
+    image:"images/Photo Jun 08 2026, 10 26 08 PM.jpg", desc:"" },
+
+  { title:"Symmetry", year:2026, medium:"", size:"", status:"available",
+    image:"images/Photo Jun 08 2026, 4 33 56 AM.jpg", desc:"" },
+
+  { title:"Inner Eye", year:2026, medium:"", size:"", status:"available",
+    image:"images/Photo Jun 07 2026, 8 33 02 PM.jpg", desc:"" },
+
+  { title:"Sun & Moon", year:2026, medium:"", size:"", status:"available",
+    image:"images/Photo Jun 07 2026, 12 53 35 PM.jpg", desc:"" },
+
+  { title:"Pink Cathedral", year:2026, medium:"", size:"", status:"available",
+    image:"images/Photo Jun 06 2026, 1 16 11 PM.jpg", desc:"" },
+
+  { title:"Breath", year:2026, medium:"", size:"", status:"available",
+    image:"images/Photo Jun 06 2026, 1 15 04 PM.jpg", desc:"" },
+
+  { title:"Coastal Dawn", year:2026, medium:"", size:"", status:"available",
+    image:"images/Photo Jun 05 2026, 1 48 53 PM.jpg", desc:"" },
+
+  { title:"All-Seeing", year:2026, medium:"", size:"", status:"available",
+    image:"images/Photo Jun 05 2026, 6 06 07 AM.jpg", desc:"" },
+
+  { title:"Butterfly Hearts", year:2026, medium:"", size:"", status:"available",
+    image:"images/Photo Jun 03 2026, 5 34 12 AM.jpg", desc:"" },
+
+  { title:"Voyage", year:2026, medium:"", size:"", status:"available",
+    image:"images/Photo Jun 02 2026, 3 34 19 AM.jpg", desc:"" },
+
+  { title:"Three Stars", year:2026, medium:"", size:"", status:"available",
+    image:"images/Photo Jun 01 2026, 9 56 26 AM.jpg", desc:"" },
+
+  { title:"Crystal Shrine", year:2026, medium:"", size:"", status:"available",
+    image:"images/Photo Jun 01 2026, 5 59 11 AM.jpg", desc:"" },
+
+  { title:"Orange Halo", year:2026, medium:"", size:"", status:"available",
+    image:"images/Photo May 31 2026, 11 33 19 PM.jpg", desc:"" },
+
+  { title:"Night Garden", year:2026, medium:"", size:"", status:"available",
+    image:"images/Photo May 30 2026, 5 44 24 PM.jpg", desc:"" },
+
+  { title:"Golden Mosaic", year:2026, medium:"", size:"", status:"available",
+    image:"images/Photo May 30 2026, 11 32 29 AM.jpg", desc:"" },
+
+  { title:"Hourglass", year:2026, medium:"", size:"", status:"available",
+    image:"images/Photo May 29 2026, 7 17 11 AM.jpg", desc:"" },
+
+  { title:"Pyramid", year:2026, medium:"", size:"", status:"available",
+    image:"images/Photo May 29 2026, 6 24 45 AM.jpg", desc:"" },
+
+  { title:"Caged Heart", year:2026, medium:"", size:"", status:"available",
+    image:"images/Photo May 27 2026, 7 07 06 AM.jpg", desc:"" },
+
+  { title:"Mushroom Rainbow", year:2026, medium:"", size:"", status:"available",
+    image:"images/Photo May 26 2026, 6 00 56 PM.jpg", desc:"" },
+
+  { title:"Sunrise Tide", year:2026, medium:"", size:"", status:"available",
+    image:"images/Photo May 26 2026, 11 07 54 AM.jpg", desc:"" },
+
+  { title:"Red Serpent", year:2026, medium:"", size:"", status:"available",
+    image:"images/Photo May 26 2026, 5 46 51 AM.jpg", desc:"" },
+
+  { title:"Festival Sun", year:2026, medium:"", size:"", status:"available",
+    image:"images/Photo May 25 2026, 4 41 41 PM.jpg", desc:"" },
+
+  { title:"Crossroads", year:2026, medium:"", size:"", status:"available",
+    image:"images/Photo May 25 2026, 8 06 20 AM.jpg", desc:"" },
+
+  { title:"Mirror", year:2026, medium:"", size:"", status:"available",
+    image:"images/Photo May 25 2026, 4 52 52 AM.jpg", desc:"" },
+
+  { title:"Tidal", year:2026, medium:"", size:"", status:"available",
+    image:"images/Photo May 24 2026, 10 00 34 AM.jpg", desc:"" },
+
+  { title:"Comet Fall", year:2026, medium:"", size:"", status:"available",
+    image:"images/Photo May 24 2026, 9 20 40 AM.jpg", desc:"" },
+
+  { title:"Purple Reverie", year:2026, medium:"", size:"", status:"available",
+    image:"images/Photo May 24 2026, 9 17 32 AM.jpg", desc:"" },
+
+  { title:"Coral Current", year:2026, medium:"", size:"", status:"available",
+    image:"images/Photo May 24 2026, 8 36 55 AM.jpg", desc:"" },
+
+  { title:"The Watcher", year:2026, medium:"", size:"", status:"available",
+    image:"images/Photo May 22 2026, 5 33 53 AM.jpg", desc:"" },
+
+  { title:"Magenta Star", year:2026, medium:"", size:"", status:"available",
+    image:"images/Photo May 21 2026, 12 34 02 PM.jpg", desc:"" },
+
+  { title:"Cherries & Fish", year:2026, medium:"", size:"", status:"available",
+    image:"images/Photo May 21 2026, 7 42 14 AM.jpg", desc:"" },
+
+  { title:"Golden Swirl", year:2026, medium:"", size:"", status:"available",
+    image:"images/Photo May 20 2026, 2 44 27 PM.jpg", desc:"" },
+
+  { title:"Carnival", year:2026, medium:"", size:"", status:"available",
+    image:"images/Photo May 19 2026, 1 32 17 PM.jpg", desc:"" },
+
+  { title:"The Old Farm", year:2026, medium:"", size:"", status:"available",
+    image:"images/Photo May 16 2026, 12 07 08 PM.jpg", desc:"" },
+
+  { title:"Jester Cat", year:2026, medium:"", size:"", status:"available",
+    image:"images/Photo May 16 2026, 2 27 56 AM.jpg", desc:"" },
+
+  { title:"Mourning Tree", year:2026, medium:"", size:"", status:"available",
+    image:"images/Photo May 15 2026, 2 41 33 PM.jpg", desc:"" },
+
+  { title:"Beauty Is In Everyone", year:2026, medium:"", size:"", status:"available",
+    image:"images/Photo May 15 2026, 11 09 57 AM.jpg", desc:"" },
+
+  { title:"Bouquet", year:2026, medium:"", size:"", status:"available",
+    image:"images/Photo May 14 2026, 9 05 15 PM.jpg", desc:"" },
+
+  { title:"Serpent's Eyes", year:2026, medium:"", size:"", status:"available",
+    image:"images/Photo May 14 2026, 8 28 07 PM.jpg", desc:"" },
+
+  { title:"Secret Garden", year:2026, medium:"", size:"", status:"available",
+    image:"images/Photo May 14 2026, 4 08 56 PM.jpg", desc:"" },
+
+  { title:"Spore", year:2026, medium:"", size:"", status:"available",
+    image:"images/Photo May 14 2026, 3 49 57 PM.jpg", desc:"" },
+
+  { title:"Good Vibes", year:2026, medium:"", size:"", status:"available",
+    image:"images/Photo May 14 2026, 1 03 14 PM.jpg", desc:"" },
+
+  { title:"Mermaid", year:2026, medium:"", size:"", status:"available",
+    image:"images/Photo May 14 2026, 12 35 41 PM.jpg", desc:"" },
+
+  { title:"Burning Horizon", year:2026, medium:"", size:"", status:"available",
+    image:"images/Photo May 13 2026, 11 52 58 AM.jpg", desc:"" },
+
+  { title:"Orange Fish", year:2026, medium:"", size:"", status:"available",
+    image:"images/Photo May 13 2026, 2 16 46 AM.jpg", desc:"" },
+
+  { title:"Golden Serpent", year:2026, medium:"", size:"", status:"available",
+    image:"images/Photo May 11 2026, 2 04 18 PM.jpg", desc:"" },
+
+  { title:"Blue Muse", year:2026, medium:"", size:"", status:"available",
+    image:"images/Photo May 11 2026, 10 51 24 AM.jpg", desc:"" },
 ];
 
 /* ===========================================================================
@@ -339,8 +491,11 @@ $("#contactList").innerHTML = [
 function statusText(w){
   return w.status === "sold" ? "Sold" : "Available";
 }
+function metaText(w){
+  return [w.medium, w.size, w.year].filter(Boolean).join(" · ");
+}
 function imageMarkup(w){
-  if (w.image) return `<img src="${w.image}" alt="${w.title}">`;
+  if (w.image) return `<img src="${w.image}" alt="${w.title}" loading="lazy" decoding="async">`;
   const pad = Math.round(100 * (w.ratio || 0.8));
   return `<div class="placeholder" style="padding-top:${pad}%;">
             <div class="pat"></div><div class="pt">${w.title}</div>
@@ -364,7 +519,7 @@ function render(){
       </div>
       <div class="label">
         <div class="t">${w.title}</div>
-        <div class="meta">${w.medium} · ${w.size} · ${w.year}</div>
+        <div class="meta">${metaText(w)}</div>
         <div class="price ${w.status==='sold'?'is-sold':''}">${statusText(w)}</div>
       </div>`;
     el.addEventListener("click", () => openLB(i));
@@ -387,7 +542,7 @@ function openLB(i){
   lastFocus = document.activeElement;
   $("#lbImg").innerHTML = imageMarkup(w);
   $("#lbTitle").textContent = w.title;
-  $("#lbMeta").textContent = `${w.medium} · ${w.size} · ${w.year}`;
+  $("#lbMeta").textContent = metaText(w);
   const desc = $("#lbDesc"); desc.textContent = w.desc || ""; desc.style.display = w.desc ? "block" : "none";
   const p = $("#lbPrice"); p.textContent = statusText(w); p.className = "lb-price" + (w.status==="sold"?" is-sold":"");
   const cta = $("#lbCta");
