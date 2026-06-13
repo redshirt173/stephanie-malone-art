@@ -1,0 +1,406 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Studio — Original Paintings</title>
+
+<!--
+  ============================================================================
+  HOW TO MAINTAIN THIS SITE  (short — read once)
+  ============================================================================
+  Everything you edit lives in the <script> near the bottom, in two places:
+
+  1) CONFIG  — name, hero text, the STORY paragraphs, and contact details.
+       • story: is a list of paragraphs. Add or remove lines (each in quotes,
+         comma-separated). This is her about-me / her-own-words section.
+       • portrait: "images/her-photo.jpg"  — optional. Leave "" to hide it.
+
+  2) WORKS   — the paintings, one { } block each.
+       • ADD a painting:   copy a block, paste it, change the fields.
+       • MARK SOLD:         status: "available"  ->  status: "sold"
+       • PRICE:             one flat price for every painting — edit the wording
+                            in CONFIG.pricingBlurb. No per-painting prices.
+       • PHOTOS:            put files in an "images" folder next to this file,
+                            then set  image: "images/yourfile.jpg".
+                            Leave image: "" for a clean placeholder.
+
+  No build step, no database. Save, re-upload, done.
+  ============================================================================
+-->
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --bg:      #143037;   /* petrol wall      */
+    --bg-2:    #1c3b43;   /* recessed panel   */
+    --ink:     #eef1ee;   /* near-white text  */
+    --soft:    #94aaa7;   /* secondary text   */
+    --accent:  #e0b478;   /* warm sand accent */
+    --accent-d:#ca9a5c;
+    --hair:    #274a51;   /* hairline rules   */
+    --display: "Space Grotesk", system-ui, sans-serif;
+    --body:    "Inter", system-ui, -apple-system, sans-serif;
+  }
+
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font-family:var(--body); font-size:16px; line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{ color:inherit; }
+  img{ display:block; width:100%; height:auto; }
+  .wrap{ max-width:1180px; margin:0 auto; padding:0 28px; }
+
+  /* ---------- header ---------- */
+  header.site{
+    position:sticky; top:0; z-index:40;
+    background:color-mix(in srgb, var(--bg) 86%, transparent);
+    backdrop-filter:saturate(1.1) blur(10px);
+    border-bottom:1px solid var(--hair);
+  }
+  .bar{ display:flex; align-items:baseline; justify-content:space-between; padding:18px 0; }
+  .mark{ font-family:var(--display); font-weight:600; font-size:1.28rem; letter-spacing:-.01em; text-decoration:none; }
+  nav.site a{
+    font-size:.72rem; text-transform:uppercase; letter-spacing:.16em;
+    text-decoration:none; color:var(--soft); margin-left:24px; transition:color .2s;
+  }
+  nav.site a:hover{ color:var(--ink); }
+  nav.site a.story{ color:var(--accent); }
+  nav.site a.story:hover{ color:var(--accent-d); }
+
+  /* ---------- hero ---------- */
+  .hero{ padding:84px 0 34px; max-width:820px; }
+  .eyebrow{ font-size:.72rem; text-transform:uppercase; letter-spacing:.24em; color:var(--accent); margin:0 0 22px; }
+  .hero h1{
+    font-family:var(--display); font-weight:500; line-height:1.02;
+    font-size:clamp(2.6rem, 6.2vw, 4.7rem); margin:0 0 24px; letter-spacing:-.02em;
+  }
+  .hero p{ font-size:1.1rem; color:var(--soft); max-width:50ch; margin:0; }
+
+  /* ---------- section heads ---------- */
+  .sec-head{
+    display:flex; align-items:baseline; justify-content:space-between; gap:18px; flex-wrap:wrap;
+    padding:54px 0 28px; border-top:1px solid var(--hair); margin-top:42px;
+  }
+  .sec-head h2{ font-family:var(--display); font-weight:500; font-size:1.55rem; margin:0; letter-spacing:-.01em; }
+  .price-note{ max-width:62ch; margin:-10px 0 30px; color:var(--soft); font-size:1rem; line-height:1.55; }
+
+  .filters{ display:flex; gap:4px; }
+  .filters button{
+    font-family:var(--body); font-size:.72rem; text-transform:uppercase; letter-spacing:.14em;
+    background:none; border:1px solid transparent; color:var(--soft);
+    padding:7px 14px; border-radius:999px; cursor:pointer; transition:all .18s;
+  }
+  .filters button:hover{ color:var(--ink); }
+  .filters button[aria-pressed="true"]{ color:var(--bg); background:var(--accent); }
+
+  /* ---------- gallery wall ---------- */
+  .wall{ columns:3 280px; column-gap:30px; padding-bottom:24px; }
+  .piece{ break-inside:avoid; margin:0 0 30px; cursor:pointer; }
+  .frame{ position:relative; background:var(--bg-2); overflow:hidden; }
+  .frame img{ transition:transform .6s cubic-bezier(.2,.7,.2,1); }
+  .piece:hover .frame img{ transform:scale(1.03); }
+  .placeholder{ position:relative; }
+  .placeholder .pat{ position:absolute; inset:0; background:repeating-linear-gradient(45deg, transparent, transparent 10px, var(--hair) 10px, var(--hair) 11px); opacity:.6; }
+  .placeholder .pt{ position:absolute; inset:0; display:flex; align-items:center; justify-content:center; text-align:center; padding:0 18px; font-family:var(--display); color:var(--soft); font-size:1.02rem; }
+
+  .piece.sold .frame{ opacity:.58; }
+  .sold-tag{
+    position:absolute; top:14px; left:14px; font-size:.64rem; text-transform:uppercase; letter-spacing:.2em;
+    background:var(--accent); color:var(--bg); padding:5px 11px; font-weight:600;
+  }
+  .label{ padding:13px 2px 0; }
+  .label .t{ font-family:var(--display); font-weight:500; font-size:1.02rem; line-height:1.25; }
+  .label .meta{ font-size:.82rem; color:var(--soft); margin-top:4px; }
+  .label .price{ font-size:.84rem; margin-top:8px; letter-spacing:.02em; color:var(--accent); }
+  .label .price.is-sold{ color:var(--soft); }
+
+  /* ---------- story ---------- */
+  .band{ border-top:1px solid var(--hair); padding:64px 0; }
+  .story-grid{ display:grid; grid-template-columns:0.85fr 1.4fr; gap:50px; align-items:start; }
+  .story-grid.no-portrait{ grid-template-columns:1fr; max-width:760px; }
+  .portrait{ background:var(--bg-2); position:relative; }
+  .portrait .placeholder{ padding-top:120%; }
+  .portrait .ptlabel{ position:absolute; inset:0; display:flex; align-items:center; justify-content:center; color:var(--soft); font-size:.8rem; text-transform:uppercase; letter-spacing:.14em; }
+  .story-body .kicker{ font-size:.72rem; text-transform:uppercase; letter-spacing:.2em; color:var(--accent); margin:0 0 14px; }
+  .story-body h2{ font-family:var(--display); font-weight:500; font-size:2rem; margin:0 0 22px; letter-spacing:-.01em; }
+  .story-body p{ margin:0 0 18px; color:var(--ink); opacity:.92; max-width:60ch; }
+
+  /* ---------- contact ---------- */
+  .contact-grid{ display:grid; grid-template-columns:1fr 1.4fr; gap:46px; }
+  .contact-grid h2{ font-family:var(--display); font-weight:500; font-size:1.55rem; margin:0; }
+  .contact-grid p{ margin:0 0 16px; color:var(--soft); max-width:54ch; }
+  .contact-list{ list-style:none; padding:0; margin:18px 0 0; }
+  .contact-list li{ padding:14px 0; border-top:1px solid var(--hair); display:flex; gap:18px; }
+  .contact-list li:last-child{ border-bottom:1px solid var(--hair); }
+  .contact-list .k{ font-size:.7rem; text-transform:uppercase; letter-spacing:.16em; color:var(--soft); min-width:92px; padding-top:3px; }
+  .contact-list .v{ font-size:1.05rem; }
+  .contact-list a{ text-decoration:none; border-bottom:1px solid var(--hair); transition:border-color .2s; }
+  .contact-list a:hover{ border-color:var(--accent); }
+  .note{ font-size:.9rem; color:var(--soft); margin-top:22px; }
+
+  footer.site{ border-top:1px solid var(--hair); padding:34px 0; font-size:.8rem; color:var(--soft); }
+  footer .row{ display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px; }
+
+  /* ---------- lightbox ---------- */
+  .lightbox{ position:fixed; inset:0; z-index:80; display:none; background:rgba(8,18,20,.86); padding:32px; }
+  .lightbox.open{ display:flex; align-items:center; justify-content:center; }
+  .lb-inner{ background:var(--bg); max-width:980px; width:100%; max-height:90vh; overflow:auto; display:grid; grid-template-columns:1.5fr 1fr; border:1px solid var(--hair); }
+  .lb-img{ background:var(--bg-2); display:flex; align-items:center; justify-content:center; min-height:320px; }
+  .lb-img img{ width:100%; height:100%; object-fit:contain; max-height:90vh; }
+  .lb-img .placeholder{ width:100%; min-height:400px; }
+  .lb-side{ padding:42px 34px; position:relative; }
+  .lb-side .t{ font-family:var(--display); font-weight:500; font-size:1.7rem; line-height:1.2; margin:0 0 6px; }
+  .lb-side .meta{ color:var(--soft); margin-bottom:22px; }
+  .lb-side .desc{ font-size:.95rem; color:var(--ink); opacity:.9; margin:0 0 24px; }
+  .lb-price{ font-size:1.1rem; margin-bottom:28px; color:var(--accent); }
+  .lb-price.is-sold{ color:var(--soft); }
+  .lb-cta{ display:inline-block; font-size:.76rem; text-transform:uppercase; letter-spacing:.14em; text-decoration:none; background:var(--accent); color:var(--bg); padding:14px 24px; font-weight:600; transition:background .2s; }
+  .lb-cta:hover{ background:var(--accent-d); }
+  .lb-close{ position:absolute; top:14px; right:16px; background:none; border:none; cursor:pointer; font-size:1.6rem; line-height:1; color:var(--soft); padding:6px; }
+  .lb-close:hover{ color:var(--ink); }
+
+  :focus-visible{ outline:2px solid var(--accent); outline-offset:3px; }
+
+  @media (max-width:760px){
+    .wrap{ padding:0 20px; }
+    .story-grid, .contact-grid{ grid-template-columns:1fr; gap:30px; }
+    .lb-inner{ grid-template-columns:1fr; }
+    .hero{ padding:56px 0 22px; }
+    nav.site a:first-child{ margin-left:0; }
+  }
+  @media (prefers-reduced-motion:reduce){ *{ animation:none !important; transition:none !important; scroll-behavior:auto; } }
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="wrap bar">
+    <a class="mark" href="#top" id="mark">Artist Name</a>
+    <nav class="site">
+      <a href="#work">Work</a>
+      <a href="#story" class="story">Story</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <section class="wrap hero">
+    <p class="eyebrow" id="eyebrow">Original paintings</p>
+    <h1 id="heroTitle"></h1>
+    <p id="heroLede"></p>
+  </section>
+
+  <section class="wrap" id="work">
+    <div class="sec-head">
+      <h2>Available Work</h2>
+      <div class="filters" role="group" aria-label="Filter works">
+        <button data-filter="all" aria-pressed="true">All</button>
+        <button data-filter="available" aria-pressed="false">Available</button>
+        <button data-filter="sold" aria-pressed="false">Sold</button>
+      </div>
+    </div>
+    <p class="price-note" id="priceNote"></p>
+    <div class="wall" id="wall"></div>
+  </section>
+
+  <section class="band" id="story">
+    <div class="wrap story-grid" id="storyGrid">
+      <div class="portrait" id="portrait"></div>
+      <div class="story-body">
+        <p class="kicker">Story</p>
+        <h2>About the artist</h2>
+        <div id="storyText"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" id="contact">
+    <div class="wrap contact-grid">
+      <h2>Contact</h2>
+      <div>
+        <p>Interested in a piece? Reach out directly — sales are arranged in person and works are delivered by hand.</p>
+        <ul class="contact-list" id="contactList"></ul>
+        <p class="note" id="contactNote"></p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site">
+  <div class="wrap row">
+    <span id="footName"></span>
+    <span>Original works · arranged directly · delivered by hand</span>
+  </div>
+</footer>
+
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Artwork detail">
+  <div class="lb-inner">
+    <div class="lb-img" id="lbImg"></div>
+    <div class="lb-side">
+      <button class="lb-close" id="lbClose" aria-label="Close">×</button>
+      <div class="t" id="lbTitle"></div>
+      <div class="meta" id="lbMeta"></div>
+      <p class="desc" id="lbDesc"></p>
+      <div class="lb-price" id="lbPrice"></div>
+      <a class="lb-cta" id="lbCta" href="#">Email to inquire</a>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ===========================================================================
+   1) CONFIG  — your details. Edit the text on the right of each line.
+   =========================================================================== */
+const CONFIG = {
+  artistName: "Stephanie Malone",
+  eyebrow:    "Original paintings",
+  heroTitle:  "Paintings, made by hand and sold directly.",
+  heroLede:   "A working collection of original work. Browse what's available, and get in touch about anything that speaks to you.",
+
+  /* Her story — her words. Each line in quotes is one paragraph. */
+  story: [
+    "This is your space to tell your story in your own voice. Write about how you came to painting, the work you make, and what it means to you.",
+    "You're welcome to share your experience as a disabled artist here — as much or as little as you like, framed however feels right to you. There's no wrong way to write it.",
+    "Replace all of this placeholder text whenever you're ready. (To edit: find the 'story' lines in this file's CONFIG and change the words inside the quotes.)"
+  ],
+  portrait:   "",   /* e.g. "images/portrait.jpg" — leave "" to hide the photo */
+
+  pricingBlurb:"Every original is $15 — one flat price for every painting, so choosing is only ever about the art, never the cost. Reach out about any piece you'd like to bring home.",
+
+  email:      "stephanie.suzanne.malone@gmail.com",
+  phone:      "(832) 576-1864",
+  location:   "Lakeway, Texas",
+  contactNote:"Payment and pickup or hand delivery are arranged when you reach out."
+};
+
+/* ===========================================================================
+   2) WORKS  — one { } block per painting.  status: "available" or "sold".
+   =========================================================================== */
+const WORKS = [
+  { title:"Untitled (Morning)", year:2025, medium:"Oil on canvas", size:'30 × 40 in',
+    status:"available", image:"", ratio:0.78,
+    desc:"Add an optional sentence or two about this piece — the idea behind it, the palette, where it was made." },
+
+  { title:"Field Study No. 3", year:2025, medium:"Acrylic on panel", size:'18 × 24 in',
+    status:"available", image:"", ratio:0.75, desc:"" },
+
+  { title:"Low Tide", year:2024, medium:"Oil on linen", size:'24 × 24 in',
+    status:"sold", image:"", ratio:1, desc:"" },
+
+  { title:"Quiet Room", year:2024, medium:"Watercolor on paper", size:'14 × 11 in',
+    status:"available", image:"", ratio:1.28, desc:"" },
+
+  { title:"Two Trees", year:2023, medium:"Oil on canvas", size:'36 × 48 in',
+    status:"available", image:"", ratio:0.75, desc:"" },
+
+  { title:"After the Rain", year:2023, medium:"Acrylic on canvas", size:'20 × 16 in',
+    status:"sold", image:"", ratio:1.25, desc:"" }
+];
+
+/* ===========================================================================
+   Machinery below — no need to edit.
+   =========================================================================== */
+const $ = s => document.querySelector(s);
+
+$("#mark").textContent = CONFIG.artistName;
+$("#eyebrow").textContent = CONFIG.eyebrow;
+$("#heroTitle").textContent = CONFIG.heroTitle;
+$("#heroLede").textContent = CONFIG.heroLede;
+$("#footName").textContent = CONFIG.artistName;
+$("#contactNote").textContent = CONFIG.contactNote;
+$("#priceNote").textContent = CONFIG.pricingBlurb;
+document.title = CONFIG.artistName + " — Original Paintings";
+
+$("#storyText").innerHTML = CONFIG.story.map(p => `<p>${p}</p>`).join("");
+
+// portrait (optional)
+const grid = $("#storyGrid"), portrait = $("#portrait");
+if (CONFIG.portrait){
+  portrait.innerHTML = `<img src="${CONFIG.portrait}" alt="Portrait of ${CONFIG.artistName}">`;
+} else {
+  grid.classList.add("no-portrait");
+  portrait.remove();
+}
+
+$("#contactList").innerHTML = [
+  ["Email", `<a href="mailto:${CONFIG.email}">${CONFIG.email}</a>`],
+  ["Phone", `<a href="tel:${CONFIG.phone.replace(/[^\d+]/g,'')}">${CONFIG.phone}</a>`],
+  ["Studio", CONFIG.location]
+].map(([k,v]) => `<li><span class="k">${k}</span><span class="v">${v}</span></li>`).join("");
+
+function statusText(w){
+  return w.status === "sold" ? "Sold" : "Available";
+}
+function imageMarkup(w){
+  if (w.image) return `<img src="${w.image}" alt="${w.title}">`;
+  const pad = Math.round(100 * (w.ratio || 0.8));
+  return `<div class="placeholder" style="padding-top:${pad}%;">
+            <div class="pat"></div><div class="pt">${w.title}</div>
+          </div>`;
+}
+
+let activeFilter = "all";
+const wall = $("#wall");
+function render(){
+  wall.innerHTML = "";
+  WORKS.forEach((w, i) => {
+    if (activeFilter !== "all" && w.status !== activeFilter) return;
+    const el = document.createElement("article");
+    el.className = "piece" + (w.status === "sold" ? " sold" : "");
+    el.tabIndex = 0; el.setAttribute("role", "button");
+    el.setAttribute("aria-label", `${w.title}. ${statusText(w)}. View details.`);
+    el.innerHTML = `
+      <div class="frame">
+        ${w.status === "sold" ? '<span class="sold-tag">Sold</span>' : ''}
+        ${imageMarkup(w)}
+      </div>
+      <div class="label">
+        <div class="t">${w.title}</div>
+        <div class="meta">${w.medium} · ${w.size} · ${w.year}</div>
+        <div class="price ${w.status==='sold'?'is-sold':''}">${statusText(w)}</div>
+      </div>`;
+    el.addEventListener("click", () => openLB(i));
+    el.addEventListener("keydown", e => { if(e.key==="Enter"||e.key===" "){ e.preventDefault(); openLB(i); }});
+    wall.appendChild(el);
+  });
+}
+document.querySelectorAll(".filters button").forEach(btn => {
+  btn.addEventListener("click", () => {
+    activeFilter = btn.dataset.filter;
+    document.querySelectorAll(".filters button").forEach(b => b.setAttribute("aria-pressed", b===btn));
+    render();
+  });
+});
+
+const lb = $("#lightbox");
+let lastFocus = null;
+function openLB(i){
+  const w = WORKS[i];
+  lastFocus = document.activeElement;
+  $("#lbImg").innerHTML = imageMarkup(w);
+  $("#lbTitle").textContent = w.title;
+  $("#lbMeta").textContent = `${w.medium} · ${w.size} · ${w.year}`;
+  const desc = $("#lbDesc"); desc.textContent = w.desc || ""; desc.style.display = w.desc ? "block" : "none";
+  const p = $("#lbPrice"); p.textContent = statusText(w); p.className = "lb-price" + (w.status==="sold"?" is-sold":"");
+  const cta = $("#lbCta");
+  if (w.status === "sold"){ cta.style.display = "none"; }
+  else { cta.style.display = "inline-block"; cta.href = `mailto:${CONFIG.email}?subject=${encodeURIComponent("Inquiry: " + w.title)}`; }
+  lb.classList.add("open"); document.body.style.overflow = "hidden"; $("#lbClose").focus();
+}
+function closeLB(){ lb.classList.remove("open"); document.body.style.overflow = ""; if (lastFocus) lastFocus.focus(); }
+$("#lbClose").addEventListener("click", closeLB);
+lb.addEventListener("click", e => { if (e.target === lb) closeLB(); });
+document.addEventListener("keydown", e => { if (e.key === "Escape" && lb.classList.contains("open")) closeLB(); });
+
+render();
+</script>
+</body>
+</html>
